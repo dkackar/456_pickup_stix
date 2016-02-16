@@ -1,0 +1,36 @@
+<div id="main">
+  <div> 
+    <%= form_for @user do |user_fields| %>
+      <ul> 
+        <% @user.errors.full_messages.each do |error| %>
+          <li><%= error %></li>
+        <% end %>
+      </ul>
+
+      <table>
+        <tr>
+          <td><%= user_fields.label 'First Name' %> </td>
+          <td><%= user_fields.label 'Last Name' %> </td>
+          <td><%= user_fields.label 'Email'%></td> 
+          <td><%= user_fields.label 'Password' %> </td>
+        </tr>
+        <tr>
+          <td> <%= user_fields.text_field :first_name,
+               class: "form_control" %> 
+          </td>
+          <td> <%= user_fields.text_field :last_name,
+               class: "form_control"  %> 
+          </td>
+          <td> <%= user_fields.text_field :email,
+               class: "form_control"  %> 
+          </td>
+          <td> <%= user_fields.password_field :password,
+                  class: "form_control" %>
+          </td>
+          <td> <%= user_fields.submit "Update", class: "btn btn-info" %></td>
+        </tr>
+
+      </table>
+    <% end %>     
+  </div>
+</div>  

@@ -15,7 +15,17 @@
     <%= csrf_meta_tags %>
   </head>
   <body>
-          
+        
+
+    <div class="row">
+      <div class="col col-xs-12">
+        <% flash.each do |type, message| %>
+          <h4 class='<%= type %> alert alert-info'><%= "#{message}" %>
+        <% end %>
+     </div>
+   </div>
+
+  
     <%= yield %>
 
     <!-- Bootstrap JavaScript -->

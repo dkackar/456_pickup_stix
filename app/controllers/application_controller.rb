@@ -24,9 +24,6 @@ class ApplicationController < ActionController::Base
   end
   helper_method :is_current_user?
 
-
-
-
   protected
   def sign_in(user)
     session[:auth_token] = user.auth_token
@@ -57,4 +54,17 @@ class ApplicationController < ActionController::Base
       redirect_to root_path
     end
   end
+
+
+    def require_current_user
+    # don't forget that params is a string!!!
+    puts "CURRENT is #{current_user.id.to_s}and USER IS #{params[:user_id]} **"
+    puts "Current controller is #{params[:controller]}"
+
+    if (params[:controller] == "users" && params[:id] != current_user.id.to_s) ||
+       (params[:controller] != "users" && params[:user_id] != current_user.id.to_s) 
+        flash[:error] = "You're not authorized to view this"
+        redirect_to root_url
+    end
+  end 
 end

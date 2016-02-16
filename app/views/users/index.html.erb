@@ -1,0 +1,23 @@
+
+<table>
+  <tbody>
+    <tr>
+      <td>First Name</td>
+      <td>Last Name </td>
+      <td>Email </td> 
+      <td>No of Playlists</td>
+    </tr>
+    <% @users.each do |user| %>
+      <tr>
+        <td> </td>
+        <td> <%= link_to "#{user.first_name} #{user.last_name}", user_path(user) %></td>
+        <td> <%= user.email %> </td>
+        <td> <%= user.playlists.count %></td>
+      <tr>
+    <% end %>
+  </tbody>
+</table> 
+
+
+
+

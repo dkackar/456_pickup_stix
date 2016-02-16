@@ -1,0 +1,49 @@
+<div id="main">
+
+  <table>
+    <tr>
+      <td>First Name</td>
+      <td>Last Name </td>
+      <td>Email </td> 
+      <td>No of Playlists</td>
+    </tr>
+    <tr>
+      <td> <%= @user.first_name %> </td>
+      <td> <%= @user.last_name %> </td>
+      <td> <%= @user.playlists.count %></td>
+    </tr>
+  </table>
+
+  <div>
+    <br>
+    <h3>User Playlist</h3>
+      <% @playlists.each do |playlist| %>
+        <p>Playlist Name: <%= playlist.name %> </p>
+      <% end %>  
+  </div>
+
+  <div>
+    <br>
+    <h3>User Book Marks</h3>
+      <table>
+        <tbody> 
+          <% @bookmarks.each do |bookmark| %>
+            <tr>
+              <td>Type: <%= bookmark.bookmarkable_type %> </td>
+              <td> </td>
+              <td>Name: <%= bookmark.bookmarkable.name %> </td>
+            </tr>
+          <% end %>  
+        </tbody> 
+      </table>
+  </div>
+
+  <div>
+    <%= link_to "EDIT_USER", edit_user_path(@user) %>
+    <%= link_to "DELETE_USER",user_path(@user), method: :delete %>
+    <p>
+    <%= link_to "ARTISTS",artists_path %>
+  </p>
+  </div>
+    
+</div>  

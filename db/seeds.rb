@@ -64,23 +64,26 @@ users = [
   {
     :first_name => 'foo',
     :last_name => 'bar',
-    :email => 'foo@bar.com'
+    :email => 'foo@bar.com',
+    :password => "12345678"
   }
 ]
 (MULTIPLIER * NUM_USERS).times do
   first_name = ModelHelper.first_name
   last_name = ModelHelper.last_name
-  email = ModelHelper.email("#{first_name} #{last_name}")
+  email = ModelHelper.email("#{first_name} #{last_name}" )
   
   users << {
     :first_name => first_name,
     :last_name => last_name,
-    :email => email
+    :email => email,
+    :password => "12345678"
   }
+
 end
 User.create(users)
 users = User.all
-
+p users
 
 # ----------------------------------------
 # Create Songs
@@ -200,15 +203,3 @@ followings = Following.all
 # ----------------------------------------
 
 puts 'Done!'
-
-
-
-
-
-
-
-
-
-
-
-

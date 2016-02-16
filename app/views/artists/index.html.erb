@@ -1,0 +1,16 @@
+
+<table>
+  <tbody>
+    <tr>
+      <td>Artist Name</td>
+    </tr>
+    <% @artist.each do |artist| %>
+      <tr>
+        <td> </td>
+        <td> <%= link_to "#{artist.name}", artist_path(artist) %></td>
+      <tr>
+    <% end %>
+  </tbody>
+</table>   
+
+
