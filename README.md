@@ -35,8 +35,6 @@ Playlister is an app that allows it's users to create and share song playlists.
 
 
 
-
-
 ### Setup
 Go to the `playlister` directory and set this app up:
 

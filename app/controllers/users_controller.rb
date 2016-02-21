@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
 
-  before_action :require_login, :except => [:new, :create]
+  before_action :require_login, :except => [:new, :show, :create]
   before_action :require_current_user, :only => [:edit, :update, :destroy]
 
   def index
@@ -26,12 +26,18 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     
     if @user.save
-      flash[:success] = "User  was craeted successfully!"
+      flash[:success] = "User  was created successfully!"
+
       sign_in(@user)
-      redirect_to edit_user_path(@user)
+      redirect_to user_path(@user)
     else
-      flash[:alert] = "User was NOT craeted successfully!"
-      render :new
+      if !signed_in_user?
+         flash[:error] = "User was NOT created successfully!"
+         render :new
+      else
+        flash[:error] = "User was NOT created successfully!"
+         redirect_to root_url
+      end   
     end
 
   end
@@ -41,7 +47,7 @@ class UsersController < ApplicationController
         flash[:success] = "User was updated successfully!"
         redirect_to user_path(current_user)
     else    
-      flash[:alert] = "User NOT was updated successfully!"
+      flash[:error] = "User NOT was updated successfully!"
       render :edit
     end
   end
@@ -49,10 +55,10 @@ class UsersController < ApplicationController
   def destroy
     if current_user.destroy
       flash[:success] = "#{current_user.first_name} #{current_user.last_name} was removed!"
-      redirect_to user_path(current_user)
+       redirect_to root_url
     else    
       flash[:alert] = "#{current_user.first_name} #{current_user.last_name} could not be removed!"
-      render :edit
+      redirect_to root_url
     end
   end
 

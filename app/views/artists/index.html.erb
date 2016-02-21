@@ -3,11 +3,12 @@
   <tbody>
     <tr>
       <td>Artist Name</td>
+      <td>No of songs</td>
     </tr>
-    <% @artist.each do |artist| %>
+    <% @artists.each do |artist| %>
       <tr>
-        <td> </td>
         <td> <%= link_to "#{artist.name}", artist_path(artist) %></td>
+        <td> <%= artist.songs.count %></td>
       <tr>
     <% end %>
   </tbody>

@@ -56,15 +56,20 @@ class ApplicationController < ActionController::Base
   end
 
 
-    def require_current_user
-    # don't forget that params is a string!!!
-    puts "CURRENT is #{current_user.id.to_s}and USER IS #{params[:user_id]} **"
-    puts "Current controller is #{params[:controller]}"
+  def require_current_user
+  # don't forget that params is a string!!!
 
-    if (params[:controller] == "users" && params[:id] != current_user.id.to_s) ||
-       (params[:controller] != "users" && params[:user_id] != current_user.id.to_s) 
+    if !current_user
+      flash[:error] = "You're not signed in"
+      redirect_to login_path
+    elsif params[:controller] == "users" 
+      if params[:id] != current_user.id.to_s
         flash[:error] = "You're not authorized to view this"
-        redirect_to root_url
+        redirect_to login_path
+      end  
+    elsif params[:user_id] && params[:user_id] != current_user.id.to_s
+        flash[:error] = "You're not authorized to view this"
+        redirect_to login_path
     end
   end 
 end

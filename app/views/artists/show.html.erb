@@ -1,0 +1,49 @@
+<div id="main">
+
+  <table>
+    <tr>
+      <td><h3>Artist Name: </h3></td>
+      <td><h3><%= @artist.name %></h3> </td>
+      <td>
+        <% bookmark = bookmarked_artist(current_user,@artist) %>
+        
+        <% if !bookmark %> 
+          <%= form_for Bookmark.new do |f| %>
+            <%= hidden_field_tag :bookmarkable_id, @artist.id %>
+            <%= hidden_field_tag :bookmarkable_type, @artist.class %>
+            <%= hidden_field_tag :user_id, current_user.id %>
+            <%= f.submit "Book Mark"%>
+          <% end %>
+        <% else %>
+          <%= form_for bookmark, url: bookmark_path(bookmark), method: :delete  do |f| %>
+            <%= hidden_field_tag :user_id, current_user.id %>
+            <%= hidden_field_tag :artist_id, @artist.id %>
+            <%= f.submit "UnBookMark" %>
+          <% end %>  
+        <% end %>
+     
+      </td>   
+    </tr>
+  </table>
+  <div>
+    <h3> Songs </h3>
+
+    <%= form_for @playlist_selection do |f| %>
+      <% @songs.each_with_index do |song,index| %>
+       
+        <p> <%= index+1 %> <%= link_to "#{song.name}", song_path(song.id) %>
+          <% if current_user %>
+            <%= f.collection_select :playlist_id, current_user.playlists, :id, :name %>
+            <%= f.submit "Add to playlist" %>
+            <%= f.hidden_field :song_id, value: song.id %>
+            <%= hidden_field_tag :user_id, current_user.id %>
+            <%= hidden_field_tag :artist_id, @artist.id %>
+            <%= hidden_field_tag :referer, "Song" %>
+            <%= hidden_field_tag 'selected', 'none'  %>
+          <% end %>  
+        </p>
+      <% end %>
+
+    <% end %> 
+  </div>  
+</div> 

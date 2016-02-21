@@ -155,10 +155,3 @@ describe BookmarksController do
     end
   end
 end
-
-
-
-
-
-
-

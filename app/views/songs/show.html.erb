@@ -1,0 +1,59 @@
+<!-- <div id="main">
+
+  <table>
+    <tr>
+      <td>Song</td>
+      <td>Artist</td>
+    </tr>
+    <tr>
+      <td> <%= @song.name %> </td>
+      <td> <%= link_to @song.artist.name, artist_path(@song.artist.id) %> </td>
+    </tr>
+  </table>
+    
+</div>
+ -->
+
+
+<div id="main">
+
+  <table>
+    <tr>
+      <td><h3>Song Name: </h3></td>
+      <td><h3><%= @song.name %></h3> </td>
+      <td>
+        <% bookmark = bookmarked_song(current_user,@song) %>
+        
+        <% if !bookmark %> 
+          <%= form_for Bookmark.new do |f| %>
+            <%= hidden_field_tag :bookmarkable_id, @song.id %>
+            <%= hidden_field_tag :bookmarkable_type, @song.class %>
+            <%= hidden_field_tag :user_id, current_user.id %>
+            <%= f.submit "Book Mark"%>
+          <% end %>
+        <% else %>
+          <%= form_for bookmark, url: bookmark_path(bookmark), method: :delete  do |f| %>
+            <%= hidden_field_tag :user_id, current_user.id %>
+            <%= hidden_field_tag :song_id, @song.id %>
+            <%= f.submit "UnBookMark" %>
+          <% end %>
+        <% end %>
+       
+      </td>
+
+      <td>
+        <%= form_for @playlist_selection do |f| %>
+
+          <% if current_user %>
+            <%= f.collection_select :playlist_id, current_user.playlists, :id, :name %>
+            <%= f.submit "Add to playlist" %>
+            <%= f.hidden_field :song_id, value: song.id %>
+            <%= hidden_field_tag :user_id, current_user.id %>
+          <% end %>
+           
+        <% end %>
+      </td>
+    </tr>
+  </table>    
+  
+</div> 

@@ -2,10 +2,11 @@ class User < ActiveRecord::Base
 
   has_many :playlists, dependent: :destroy
   has_many :bookmarks,  dependent: :destroy
-
+  
   before_create :generate_token
   has_secure_password
 
+  validates :email, :first_name, :last_name, presence: true 
   validates :password,
             :length => {:in => 8..20},
             :allow_nil => true

@@ -1,0 +1,72 @@
+<div id="main">
+
+  <table class="table-bordered">
+    <tr>
+      <td> <h3> Playlist </h3></td>
+      <td> <h3> User </h3> </td>
+      <td> <h3> Bookmark? </h3> </td>
+      <td> <h3> Edit Playlist </h3> </td>
+      <td> <h3> Delete Playlist </h3> </td>
+    </tr>
+
+    <tr>
+      <td> <h3> <%= @playlist.name %> </h3> </td>
+      <td> <h3> <%= @playlist.user.first_name %> 
+           <%= @playlist.user.last_name %> </h3>
+      </td>
+
+      <td>
+        <% bookmark = bookmarked_playlist(current_user,@playlist) %>
+        
+        <% if !bookmark %> 
+       
+          <%= form_for Bookmark.new do |f| %>
+            <%= hidden_field_tag :bookmarkable_id, @playlist.id %>
+            <%= hidden_field_tag :bookmarkable_type, @playlist.class %>
+            <%= hidden_field_tag :user_id, current_user.id %>
+            <%= f.submit "Bookmark Playlist"%>
+          <% end %>
+       
+        <% else %>
+       
+          <%= form_for bookmark, url: bookmark_path(bookmark), method: :delete  do |f| %>
+            <%= hidden_field_tag :user_id, current_user.id %>
+            <%= hidden_field_tag :playlist_id, @playlist.id %>
+            <%= f.submit "Un-Bookmark Playlist" %>
+          <% end %>
+       
+        <% end %>
+         
+      </td>
+      <td> <%= link_to "Edit", edit_playlist_path(@playlist) %> </td>
+      <td> <%= link_to "Delete", playlist_path(@playlist), method: :delete %> </td>
+    </tr>
+ 
+  </table>
+
+  <table class="table-bordered">
+    <tr>
+      <td> <h3> Song </h3></td>
+      <td> <h3> Artist </h3> </td>
+      <td> <h3> Add/Remove song from playlist </h3> </td>
+    </tr>
+
+    <% @playlist.playlist_selections.each do |playlist_selection| %>
+      <tr>
+        <td>
+          <h4> <%= link_to playlist_selection.song.name, song_path(playlist_selection.song) %> </h4> 
+        </td>
+        <td>
+          <h4> <%= link_to playlist_selection.song.artist.name, artist_path(playlist_selection.song.artist) %>
+          </h4> 
+        </td>
+        <td>
+          <h4>
+            <%= link_to "Remove song from playlist", playlist_selection_path(playlist_selection.id, user_id: current_user.id, playlist_id: @playlist.id), method: :delete %>
+          </h4>
+        </td>
+      </tr>
+    <% end %>  
+  </table> 
+  
+</div>

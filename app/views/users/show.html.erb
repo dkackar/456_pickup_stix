@@ -17,9 +17,10 @@
   <div>
     <br>
     <h3>User Playlist</h3>
-      <% @playlists.each do |playlist| %>
-        <p>Playlist Name: <%= playlist.name %> </p>
-      <% end %>  
+    <% @playlists.each do |playlist| %>
+      <p>Playlist Name: <%= link_to playlist.name, playlist_path(playlist.id) %> 
+      </p>
+    <% end %>  
   </div>
 
   <div>
@@ -39,11 +40,12 @@
   </div>
 
   <div>
-    <%= link_to "EDIT_USER", edit_user_path(@user) %>
-    <%= link_to "DELETE_USER",user_path(@user), method: :delete %>
-    <p>
-    <%= link_to "ARTISTS",artists_path %>
-  </p>
+    <br>
+    <%= link_to "EDIT_USER", edit_user_path(@user) %> | 
+    <%= link_to "DELETE_USER",user_path(@user), method: :delete %> | 
+    <%= link_to "ARTISTS",artists_path %> | 
+    <%= link_to "NEW_PLAYLIST",new_playlist_path %>
+    </p>
   </div>
     
-</div>  
+</div> 

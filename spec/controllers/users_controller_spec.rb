@@ -168,7 +168,7 @@ describe UsersController do
     context 'the user IS logged in' do
       before do
         create_session(user)
-        post_create_valid
+        post_create_invalid #wrong one?
       end
 
 
@@ -255,7 +255,8 @@ describe UsersController do
 
 
         it 'does not update the user' do
-          expect(user.name).to_not eq('Foo')
+          #expect(user.name).to_not eq('Foo')
+          expect(user.first_name).to_not eq('Foo')
         end
 
 
